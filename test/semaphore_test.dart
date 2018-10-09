@@ -27,7 +27,7 @@ void main() {
 
       var s1 = new Semaphore(1);
       var s2 = new Semaphore(1);
-      var list = [];
+      var list = <Future>[];
       for (var i = 0; i < 3; i++) {
         Future f(Semaphore s, List l) async {
           try {
@@ -63,7 +63,7 @@ void main() {
       }
 
       var s1 = new Semaphore(3);
-      var list = [];
+      var list = <Future>[];
       for (var i = 0; i < maxCount * 2; i++) {
         Future f(Semaphore s, List l) async {
           try {
