@@ -8,7 +8,7 @@ import "dart:async";
 /// time, [wait] can be used to block until all processes have finished.
 class WaitGroup {
   int _counter = 0;
-  Completer _completer;
+  Completer? _completer;
 
   WaitGroup();
 
@@ -21,8 +21,9 @@ class WaitGroup {
       throw new StateError("WaitGroup counter cannot go negative.");
     }
     _counter += amount;
-    if (_counter == 0 && _completer != null) {
-      _completer.complete();
+    final completer = _completer;
+    if (_counter == 0 && completer != null) {
+      completer.complete();
     }
   }
 
@@ -34,9 +35,13 @@ class WaitGroup {
     if (_counter == 0) {
       return new Future.value();
     }
-    if (_completer == null) {
-      _completer = new Completer();
+
+    final completer = _completer;
+    if (completer == null) {
+      final completer = Completer();
+      _completer = completer;
+      return completer.future;
     }
-    return _completer.future;
+    return completer.future;
   }
 }

@@ -11,11 +11,11 @@ import "package:sync/read_write_mutex.dart";
 /// During this time other code may execute, which could lead to race conditions
 /// if critical sections of code are not protected.
 ///
-Future sleep([Duration duration]) async {
+Future sleep([Duration? duration]) async {
   assert(duration != null && duration is Duration);
 
   var completer = new Completer();
-  new Timer(duration, () {
+  new Timer(duration!, () {
     completer.complete();
   });
 
@@ -33,9 +33,9 @@ class RWTester {
   /// Set to true to print out read/write to the balance during deposits
   static final bool debugOutput = false;
 
-  DateTime _startTime;
+  late DateTime _startTime;
 
-  void _debugPrint([String message]) {
+  void _debugPrint([String? message]) {
     if (debugOutput) {
       if (message != null) {
         var t = new DateTime.now().difference(_startTime).inMilliseconds;
@@ -103,7 +103,7 @@ class RWTester {
   ///
   /// This method demonstrates the use of a read lock on the mutex.
   ///
-  Future<double> reading(int startDelay, int dangerWindow) async {
+  Future reading(int startDelay, int dangerWindow) async {
     await sleep(new Duration(milliseconds: startDelay));
 
     await mutex.acquireRead();
