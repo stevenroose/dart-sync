@@ -11,9 +11,6 @@ class Semaphore {
   Queue<Completer> _waitQueue = new Queue<Completer>();
 
   Semaphore([this.maxCount = 1]) {
-    if (maxCount == null) {
-      throw new ArgumentError.notNull("maxCount");
-    }
     if (maxCount < 1) {
       throw new RangeError.value(maxCount, "maxCount");
     }
