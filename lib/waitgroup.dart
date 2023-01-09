@@ -27,6 +27,15 @@ class WaitGroup {
     }
   }
 
+  int get counter => _counter;
+
+  void reset() {
+    _counter = 0;
+    if (_completer != null) {
+      _completer!.complete();
+    }
+  }
+
   /// Decrements the WaitGroup counter.
   void done() => add(-1);
 
